@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int base,power;
+    struct node *next;
+}*expr1,*expr2,*expr3,*Temp;
+
+struct node *createnode(){
+    struct node *new = (struct node *)malloc(sizeof(struct node));
+    new->next=NULL;
+    return new;
+} 
+
+struct node * createLL(){
+    struct node *head,*temp,*new;
+    int flag=1;
+    head = createnode();
+    temp = head;
+    while(flag == 1){
+        printf("\nEnter Base : ");
+        scanf("%d", &temp->base); 
+        printf("\nEnter Power : ");
+        scanf("%d", &temp->power);
+        printf("\nPress 1 to enter more node : ");
+        scanf("%d", &flag); 
+        if (flag==1){
+            new = createnode();
+            temp->next = new;
+            temp = new;
+        }
+    }
+    return head;
+}
+
+void display(struct node *head){
+    struct node *temp;
+    if(head == NULL){
+        printf("\nLL empty\n");
+    }
+    else{
+        temp = head; 
+        while(temp != NULL){
+            printf("%d^(%d) + ", temp->base, temp->power);
+            temp = temp->next;
+        }
+        printf("0\n");
+    }
+}
+
+void addNode(int base, int power){
+    if(Temp==NULL){
+        expr3 = createnode();
+        expr3->base = base;
+        expr3->power = power;
+        Temp = expr3;
+    }
+    else{
+        struct node *new = createnode();
+        Temp->next = new;
+        new->base = base;
+        new->power = power;
+        Temp = new;
+    }
+}
+
+void add(){
+    struct node *temp1 = expr1;
+    struct node *temp2 = expr2;
+    
+    while(temp1 != NULL && temp2 != NULL){
+        if(temp1->power == temp2->power){
+            addNode(temp1->base + temp2->base, temp1->power);
+            temp2 = temp2->next;
+            temp1 = temp1->next;
+        }
+        else if(temp1->power > temp2->power){
+            addNode(temp1->base, temp1->power);
+            temp1 = temp1->next;
+        }
+        else if(temp1->power > temp2->power){
+            addNode(temp2->base, temp2->power);
+            temp2 = temp2->next;
+        }
+    }
+    while(temp1 != NULL){
+        addNode(temp1->base, temp1->power);
+        temp1 = temp1->next;
+    }
+    while(temp2 != NULL){
+        addNode(temp2->base, temp2->power);
+        temp2 = temp2->next;
+    }
+}
+
+void main(){
+    printf("\nExpression 1 : \n");
+    expr1 = createLL();
+    printf("\nExpression 2 : \n");
+    expr2 = createLL();
+    printf("Expression 1 : ");
+    display(expr1);
+    printf("Expression 2 : ");
+    display(expr2);
+    add();
+    printf("Expression 3 : ");
+    display(expr3);
+}
