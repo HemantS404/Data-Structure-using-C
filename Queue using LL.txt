@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 5
+
+struct node{
+    int data;
+    struct node *next;
+};
+
+struct node *f = NULL, *r = NULL;
+
+struct node *createnode(){
+    struct node *new = (struct node *)malloc(sizeof(struct node));
+    new->next = NULL;
+    return new;
+}
+
+void enque(){
+    struct node *new = createnode();
+    printf("Enter Value : ");
+    scanf("%d",&new->data);
+    if(f == NULL){
+        f = new;
+        r = new;
+    }
+    else{
+        r->next = new;
+        r = new;
+    }
+}
+
+void deque(){
+    if(f == NULL){
+        printf("Queue Empty");
+    }
+    else if(f == r){
+        printf("\nPop data : %d", f->data);
+        struct node *temp = f;
+        f = NULL;
+        r = NULL;
+        free(temp);
+    }
+    else{
+       printf("\nPop data : %d", f->data);
+       struct node *temp = f;
+       f = f->next;
+       free(temp);
+    }
+}
+
+void display(){
+    if(f == NULL){
+        printf("Queue Empty");
+    }
+    else{
+       struct node *temp = f;
+       while(temp != r){
+           printf("%d\t", temp->data);
+           temp=temp->next;
+       }
+       printf("%d\n", r->data);
+    }
+}
+
+
+void main(){
+    int s, flag =1;
+    while(flag){
+        printf("\nEnter\n1.Enque\n2.Deque\n3.Display\n4.Exit\n : ");
+        scanf("%d", &s);
+        switch(s){
+            case 1:enque();break;
+            case 2:deque();break;
+            case 3:display();break;
+            case 4:flag=0;break;
+            default : printf("Wrong Input");
+        }
+    }
+}

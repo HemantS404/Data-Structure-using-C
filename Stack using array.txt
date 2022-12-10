@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 5
+
+int f = -1;
+int arr[max];
+
+void push(){
+    int val;
+    printf("\nEnter value : ");
+    scanf("%d", &val);
+    if(f == max-1){
+        printf("\nStack overflow\n");
+    }
+    else{
+        f++;
+        arr[f] = val; 
+    }
+}
+
+void pop(){
+    if(f == -1){
+        printf("\nStack underflow\n");
+    }
+    else{
+        printf("\nPop element : %d",arr[f]); 
+        f--;
+    }
+}
+
+void peek(){
+    if(f == -1){
+        printf("\nStack underflow\n");
+    }
+    else{
+        printf("Top element : %d",arr[f]); 
+    }
+}
+
+
+void main(){
+    int s, flag =1;
+    while(flag){
+        printf("\nEnter\n1.Push\n2.Pop\n3.Peek\n4.Exit\n : ");
+        scanf("%d", &s);
+        switch(s){
+            case 1:push();break;
+            case 2:pop();break;
+            case 3:peek();break;
+            case 4:flag=0;break;
+            default : printf("Wrong Input");
+        }
+    }
+}

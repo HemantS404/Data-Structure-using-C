@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 5
+
+int arr[max];
+int f = -1, r = -1;
+
+
+
+void enque(){
+    int val;
+    printf("\nEnter Value : ");
+    scanf("%d", &val);
+    if(r == max-1){
+        printf("\nQueue full\n");
+    }
+    else if(f == -1){
+        f=0;
+        r=0;
+        arr[r]=val;
+    }
+    else{
+        r++;
+        arr[r]=val;
+    }
+}
+
+void deque(){
+    if(f == -1){
+        printf("\nQueue Empty\n");
+    }
+    else if(f == r){
+        printf("\nPop data : %d", arr[f]);
+        f=-1;
+        r=-1;
+    }
+    else{
+       printf("\nPop data : %d", arr[f]);
+       f++;
+    }
+}
+
+void display(){
+    for(int i=f; i<=r; i++){
+        printf("%d\t", arr[i]);
+    }
+}
+
+
+void main(){
+    int s, flag =1;
+    while(flag){
+        printf("\nEnter\n1.Enque\n2.Deque\n3.Display\n4.Exit\n : ");
+        scanf("%d", &s);
+        switch(s){
+            case 1:enque();break;
+            case 2:deque();break;
+            case 3:display();break;
+            case 4:flag=0;break;
+            default : printf("Wrong Input");
+        }
+    }
+}
