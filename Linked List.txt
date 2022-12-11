@@ -91,12 +91,19 @@ void delete(){
         printf("\nWhich node to delete : ");
         scanf("%d", &search);
         temp = head; 
-        while(temp->next != NULL || temp->data != search){
+        while(temp->next != NULL && temp->data != search){
             prev = temp;
             temp = temp->next;
         }
-        prev->next = temp->next;
-        free(temp);
+        if(prev == NULL){
+            temp = head;
+            head = head->next;
+            free(temp);
+        }
+        else{
+            prev->next = temp->next;
+            free(temp);
+        }
     }
 }
 
