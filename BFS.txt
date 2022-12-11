@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 9
+
+int adj[max][max];
+int visited[max];
+
+void BFS(int node){
+    int que[max], f=0, r=0;
+    que[r] = node;
+    visited[node] = 1;
+    while(f <= r){
+        for(int i=0; i<max; i++){
+            if(adj[que[f]][i] == 1 && visited[i] == 0){
+                r++;
+                que[r] = i;
+                visited[i] = 1;
+            }
+        }
+        printf("%c\t", 65+que[f]);
+        f++;
+    }
+}
+
+
+void main(){
+    printf("Enter the Adjancy matrics : \n");
+    for(int i=0; i<max; i++){
+        visited[i] = 0;
+        for(int j=0; j<max; j++){
+            scanf("%d",&adj[i][j]);
+        }
+    }
+    printf("The BFS : \n");
+    BFS(0);
+}
