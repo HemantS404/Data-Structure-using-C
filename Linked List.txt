@@ -57,7 +57,7 @@ void insertAny(){
         printf("\nAfter which node : ");
         scanf("%d", &search);
         temp = head; 
-        while(temp->next != NULL || temp->data != search){
+        while(temp->next != NULL && temp->data != search){
             temp = temp->next;
         }
         new->next = temp->next;
