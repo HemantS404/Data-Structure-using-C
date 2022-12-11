@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node *next, *prev; 
+};
+
+struct node *head = NULL;
+
+struct node * createnode(){
+    struct node *new = (struct node *)malloc(sizeof(struct node));
+    new->next = NULL;
+    new->prev = NULL;
+    return new;
+}
+
+void insertHead(){
+    struct node *new = createnode();
+    printf("\nEnter the Data : ");
+    scanf("%d", &new->data);
+    if(head == NULL){
+        head = new;
+    }
+    else{
+        new->next = head;
+        head->prev = new;
+        head = new;
+    }
+}
+
+void insertRear(){
+    struct node *temp;
+    struct node *new = createnode();
+    printf("\nEnter the Data : ");
+    scanf("%d", &new->data);
+    if(head == NULL){
+        head = new;
+    }
+    else{
+        temp = head; 
+        while(temp->next != NULL){
+            temp = temp->next;
+        }
+        temp->next = new;
+        new->prev = temp;
+    }
+}
+
+void insertAny(){
+    int search;
+    struct node *temp;
+    struct node *new = createnode();
+    printf("\nEnter the Data : ");
+    scanf("%d", &new->data);
+    if(head == NULL){
+        head = new;
+    }
+    else{
+        printf("\nAfter which node : ");
+        scanf("%d", &search);
+        temp = head; 
+        while(temp->next != NULL && temp->data != search){
+            temp = temp->next;
+        }
+        if(temp->next != NULL){
+            temp->next->prev = new;
+            new->next = temp->next;
+            temp->next = new;
+            new->prev = temp;
+        }
+        else{
+            temp->next = new;
+            new->prev = temp;
+        }
+    }
+}
+
+
+void display(){
+    struct node *temp;
+    if(head == NULL){
+        printf("\nLL empty\n");
+    }
+    else{
+        temp = head; 
+        printf("\n");
+        while(temp != NULL){
+            printf("%d\t", temp->data);
+            temp = temp->next;
+        }
+    }
+}
+
+void delete(){
+    int search;
+    struct node *temp;
+    if(head == NULL){
+        printf("\nLL empty\n");
+    }
+    else if(head->next== NULL){
+        printf("\nWhich node to delete : ");
+        scanf("%d", &search);
+        if(head->data == search){
+            temp = head;
+            head = NULL;
+            free(temp);
+        }
+    }
+    else{
+        printf("\nWhich node to delete : ");
+        scanf("%d", &search);
+        temp = head; 
+        while(temp != NULL && temp->data != search){
+            temp = temp->next;
+        }
+        if(temp == NULL){
+            return;
+        }
+        else if(temp->prev == NULL){
+            head->next->prev = NULL;
+            head = head->next;
+            free(temp);
+        }
+        else if(temp->next == NULL){
+            temp->prev->next = NULL;
+            free(temp);
+        }
+        else if(temp != NULL){
+            temp->next->prev = temp->prev;
+            temp->prev->next = temp->next;
+            free(temp);
+        }
+    }
+}
+
+void main(){
+    int s, flag =1;
+    while(flag){
+        printf("\nEnter\n1.Insert At Head\n2.Insert At Any Position\n3.Insert At End\n4.Delete A Node\n5.Display\n6.Exit\n : ");
+        scanf("%d", &s);
+        switch(s){
+            case 1:insertHead();break;
+            case 2:insertAny();break;
+            case 3:insertRear();break;
+            case 4:delete();break;
+            case 5:display();break;
+            case 6:flag=0;break;
+            default : printf("Wrong Input");
+        }
+    }
+}
