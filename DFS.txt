@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 9
+
+int adj[max][max];
+int visited[max];
+
+void DFS(int node){
+    int stak[max], top=0;
+    visited[node] = 1;
+    stak[top] = node;
+    while(top>=0){
+        int e = stak[top];
+        printf("%c\t", 65+e);
+        top--;
+        for(int i=0; i<max; i++){
+            if(adj[e][i]==1 && visited[i]==0){
+                top++;
+                stak[top] = i;
+                visited[i] = 1;
+            }
+        }
+        
+    }
+}
+
+
+void main(){
+    printf("Enter the Adjancy matrics : \n");
+    for(int i=0; i<max; i++){
+        visited[i] = 0;
+        for(int j=0; j<max; j++){
+            scanf("%d",&adj[i][j]);
+        }
+    }
+    printf("The DFS : \n");
+    DFS(0);
+}
+
+
+-------------------------------------------
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#define max 9
+
+int adj[max][max], vis[max];
+
+void DFS(int root){
+    printf("%c\t", 65 + root);
+    vis[root] = 1;
+    for(int i=0; i<max; i++){
+        if(adj[root][i] != 0 && vis[i] == 0){
+            vis[i] == 1;
+            DFS(i);
+        }
+    }
+}
+
+void main(){
+    printf("Enter Adj Matrix : \n");
+    for(int i=0; i<max; i++){
+        vis[i] = 0;
+        for(int j=0; j<max; j++){
+            scanf("%d",&adj[i][j]);
+        }
+    }
+    for(int i=0; i<max; i++){
+        for(int j=0; j<max; j++){
+            printf("%d\t",adj[i][j]);
+        }
+        printf("\n");
+    }
+    printf("D.F.S. : ");
+    DFS(0);
+}
