@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+
+int arr[] = {1,3,5,7,9};
+
+int binarySearch(int search){
+    int mid, low=0, high=5;
+    while(high>=low){
+        mid = (low+high)/2;
+        if(search == arr[mid]){
+            return mid;
+        }
+        else if(arr[mid] > search){
+            high = mid-1;
+        }
+        else{
+            low = mid+1;
+        }
+    }
+    return -1;
+}
+
+void main(){
+    printf("Found at : %d",binarySearch(7));
+}
