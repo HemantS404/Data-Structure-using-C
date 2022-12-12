@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 100
+
+int top = -1;
+char stack[max]; 
+
+void push(char c){
+    top++;
+    stack[top] = c;
+}
+
+char pop(){
+    char c = stack[top];
+    top--;
+    return c;
+}
+
+int precedence(char c){
+    if(c == '%'){
+        return 3;
+    }
+    else if(c == '/' || c == '*'){
+        return 2;
+    }
+    else if(c == '+' || c == '-'){
+        return 1;
+    }
+}
+
+void main(){
+    char expr[max];
+    int i=0;
+    printf("Enter The Expression : ");
+    scanf("%s", expr);
+    while(expr[i] != '\0'){
+        if(expr[i]>='0' && expr[i]<='9' || expr[i]>='A' && expr[i]<='Z' || expr[i]>='a' && expr[i]<='z'){
+            printf("%c", expr[i]);
+        }
+        else{
+            if(expr[i] == '('){
+                push(expr[i]);
+            }
+            else if(expr[i] == ')'){
+                char f = pop();
+                while(f != '('){
+                    printf("%c", f);
+                    f = pop();
+                }
+            }
+            else{
+                if(stack[top] =='('){
+                    push(expr[i]);
+                }
+                else{
+                    while(top>=0 && precedence(expr[i]) <= precedence(stack[top])){
+                        printf("%c", pop());
+                    }
+                    push(expr[i]);
+                }
+            }
+        }
+        i++;
+    }
+    while(top>=0){
+        printf("%c", pop());
+    }
+}
