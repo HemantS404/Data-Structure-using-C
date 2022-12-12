@@ -78,7 +78,7 @@ void add(){
             addNode(temp1->base, temp1->power);
             temp1 = temp1->next;
         }
-        else if(temp1->power > temp2->power){
+        else if(temp1->power < temp2->power){
             addNode(temp2->base, temp2->power);
             temp2 = temp2->next;
         }
