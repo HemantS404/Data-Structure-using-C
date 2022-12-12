@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int arr[] = {10,9,8,7,6,5,4,3,2,1,0,-1,-2};
+int n = 13;
+
+int partion(int low, int high){
+    int i=low+1,j=high;
+    while(j>i){
+        while(arr[i]<=arr[low]){
+            i++;
+        }
+        while(arr[j]>arr[low]){
+            j--;
+        }
+        if(j>i){
+        int temp = arr[j];
+        arr[j] = arr[i];
+        arr[i] = temp;
+        }
+    }
+    int temp = arr[j];
+    arr[j] = arr[low];
+    arr[low] = temp;
+    return j;
+}
+
+void quickSort(int low, int high){
+    if(low >= high){
+        return;
+    }
+    else{
+        int pivot = low;
+        int j = partion(pivot, high);
+        quickSort(low, j-1);
+        quickSort(j+1, high);
+    }
+}
+
+
+
+void main(){
+    quickSort(0, n-1);
+    for(int i=0; i<n; i++){
+        printf("%d\t",arr[i]);
+    }
+}
