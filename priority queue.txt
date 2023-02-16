@@ -1,0 +1,73 @@
+#include <stdio.h>
+#define max 5
+
+struct node{
+    int data;
+    int priority;
+}pq[max];
+
+int rear=-1;
+
+int higestPriority(){
+    int p =-1 ;
+    for(int i=0; i<=rear; i++){
+        p = pq[i].priority>p?pq[i].priority:p;
+    }
+    return p;
+}
+
+void enque(){
+    if(rear == max-1){
+        printf("Full");
+        return;
+    }
+    rear++;
+    printf("Enter data : ");
+    scanf("%d", &pq[rear].data);
+    printf("Enter Priority : ");
+    scanf("%d", &pq[rear].priority);
+}
+
+void deque(){
+    int i;
+    if(rear==-1){
+        printf("Empty");
+        return;
+    }
+    int p = higestPriority(), data;
+    for(i=0; i<=rear; i++){
+        if(p == pq[i].priority){
+            printf("\nData : %d, Priority : %d", pq[i].data, pq[i].priority);
+            break;
+        }
+    }
+    for(int j=i; j<rear; j++){
+        pq[j].data = pq[j+1].data;
+        pq[j].priority = pq[j+1].priority;
+    }
+    rear--;
+}
+
+void display(){
+    if(rear==-1){
+        printf("Empty");
+        return;
+    }
+    for(int i=0; i<=rear; i++){
+        printf("\nData : %d, Priority : %d", pq[i].data, pq[i].priority);
+    }
+}
+
+void main(){
+    int ch, flag=1;
+    while(flag){
+        printf("1.Enque 2.Deque 3.Display 4.Exit : ");
+        scanf("%d", &ch);
+        switch(ch){
+            case 1:enque();break;
+            case 2:deque();break;
+            case 3:display();break;
+            case 4:flag=0;break;
+        }
+    }
+}
